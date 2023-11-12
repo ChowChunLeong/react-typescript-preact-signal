@@ -1,26 +1,29 @@
-import React from 'react';
-import logo from './logo.svg';
+import * as React from 'react';
 import './App.css';
+import { signal, computed, effect } from '@preact/signals-react';
 
-function App() {
+const count = signal(0); //declare a variable with observable auto rerender in UI
+const double = computed(() => count.value * 2); //declare a variable with 
+
+effect(() => {
+  console.log(count.value);
+});
+
+
+
+export default function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <h1>
+        count:{count.value}, double:{double.value}
+      </h1>
+      <button
+        onClick={() => {
+          count.value++;
+        }}
+      >
+        increment
+      </button>
     </div>
   );
 }
-
-export default App;
